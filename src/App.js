@@ -1,25 +1,36 @@
 import React, { Component } from "react";
+import axios from "axios";
+
+import Navbar from "./components/layout/Navbar";
+import Users from "./components/users/Users";
+
 import "./App.css";
 
 class App extends Component {
+	state = {
+		users: [],
+		loading: false,
+	};
+
+	async componentDidMount() {
+		// console.log(process.env.REACT_APP_GITHUB_CLIENT_SECRET);
+		this.setState({ loading: true });
+		const res = await axios.get(
+			`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+		);
+
+		this.setState({ users: res.data, loading: false });
+		// console.log(res.data);
+	}
+
 	render() {
-		const name = "Anushka Wiijegoonawardan";
-		const loading = false;
-		const showName = true;
-
-		// if (loading) {
-		// 	return <h4>Page Loading...</h4>;
-		// }
-
 		return (
 			<div className="App">
-				{loading ? (
-					<h4>Page Loading...</h4>
-				) : (
-					<h1>
-						Hello {showName && name.toUpperCase()} i am {20 + 4} years old
-					</h1>
-				)}
+				<Navbar />
+
+				<div className="container">
+					<Users loading={this.state.loading} users={this.state.users} />
+				</div>
 			</div>
 		);
 	}
