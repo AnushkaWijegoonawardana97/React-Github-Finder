@@ -78,7 +78,7 @@ const App = () => {
 						<Route
 							exact
 							path="/"
-							render={(props) => (
+							render={() => (
 								<Fragment>
 									<Alert alert={alert} />
 									<Search
