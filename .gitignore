@@ -26,3 +26,5 @@ yarn-error.log*
 # Extra Files
 note.txt
 /Guides
+# Local Netlify folder
+.netlify
